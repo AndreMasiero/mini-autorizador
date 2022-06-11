@@ -3,11 +3,10 @@ package com.vr.miniautorizador.dto;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public class CardDto {
+public class CardTransactionDto {
 
     private String cardNumber;
     private String cardPassword;
-    private LocalDateTime insertDate;
     private BigDecimal balance;
 
     public String getCardNumber() {
@@ -24,14 +23,6 @@ public class CardDto {
 
     public String getCardPassword() {
         return cardPassword;
-    }
-
-    public LocalDateTime getInsertDate() {
-        return insertDate;
-    }
-
-    public void setInsertDate(LocalDateTime insertDate) {
-        this.insertDate = insertDate;
     }
 
     public BigDecimal getBalance() {

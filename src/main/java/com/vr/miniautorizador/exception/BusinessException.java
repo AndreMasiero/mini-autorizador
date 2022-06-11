@@ -1,6 +1,5 @@
 package com.vr.miniautorizador.exception;
 
-
 import com.vr.miniautorizador.enums.ErrorCode;
 
 import java.text.MessageFormat;

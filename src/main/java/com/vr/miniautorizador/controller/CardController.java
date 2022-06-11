@@ -4,10 +4,9 @@ import com.vr.miniautorizador.dto.response.CardRequest;
 import com.vr.miniautorizador.service.CardService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
 
 @RestController
 @RequestMapping(value = "/cartoes")
@@ -22,5 +21,10 @@ public class CardController {
     @PostMapping
     public ResponseEntity<String> save(@RequestBody CardRequest cardRequest) throws Exception {
         return ResponseEntity.status(HttpStatus.CREATED).body(cardService.save(cardRequest));
+    }
+
+    @RequestMapping(value = "/{cardNumber}", method = RequestMethod.GET)
+    public ResponseEntity<BigDecimal> update(@PathVariable final String cardNumber) {
+        return ResponseEntity.status(HttpStatus.OK).body(cardService.getcardBalance(cardNumber));
     }
 }

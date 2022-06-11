@@ -6,6 +6,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -23,6 +24,9 @@ public class Cards {
 
     @Column(name = "card_password")
     private String cardPassword;
+
+    @Column
+    private BigDecimal balance;
 
     @Column(name = "insert_date")
     private LocalDateTime insertDate;
@@ -49,6 +53,14 @@ public class Cards {
 
     public void setCardPassword(String cardPassword) {
         this.cardPassword = cardPassword;
+    }
+
+    public BigDecimal getBalance() {
+        return balance;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
     }
 
     public LocalDateTime getInsertDate() {

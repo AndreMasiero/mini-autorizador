@@ -4,12 +4,13 @@ import com.vr.miniautorizador.domain.Cards;
 import com.vr.miniautorizador.dto.CardDto;
 import com.vr.miniautorizador.dto.response.CardRequest;
 import com.vr.miniautorizador.enums.ErrorCode;
-import com.vr.miniautorizador.exception.ConflictException;
+import com.vr.miniautorizador.exception.UnprocessableEntityException;
+import com.vr.miniautorizador.exception.NotFoundException;
 import com.vr.miniautorizador.mapper.CardMapper;
 import com.vr.miniautorizador.repository.CardRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.Optional;
 
@@ -31,12 +32,25 @@ public class CardService {
         Optional<Cards> card = cardRepository.findByCardNumber(cardDto.getCardNumber());
 
         if (card.isPresent()) {
-            throw new ConflictException(ErrorCode.CARD_ALREADY_EXISTS);
+            throw new UnprocessableEntityException(ErrorCode.CARD_ALREADY_EXISTS);
         }
 
         cardDto.setInsertDate(LocalDateTime.now());
+        cardDto.setBalance(BigDecimal.valueOf(500));
         Cards cards = cardMapper.cardDtoToEntity(cardDto);
 
         return cardRepository.save(cards).getId();
     }
+
+    public BigDecimal getcardBalance(String cardNumber){
+
+        Optional<Cards> card = cardRepository.findByCardNumber(cardNumber);
+
+        if (!card.isPresent()) {
+            throw new NotFoundException(ErrorCode.CARD_NOT_FOUND);
+        }
+
+        return card.get().getBalance();
+    }
+
 }
