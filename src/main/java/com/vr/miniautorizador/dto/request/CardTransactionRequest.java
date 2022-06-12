@@ -1,4 +1,4 @@
-package com.vr.miniautorizador.dto.response;
+package com.vr.miniautorizador.dto.request;
 
 import java.math.BigDecimal;
 
@@ -18,5 +18,17 @@ public class CardTransactionRequest {
 
     public BigDecimal getValor() {
         return valor;
+    }
+
+    public void setNumeroCartao(String numeroCartao) {
+        this.numeroCartao = numeroCartao;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
+    }
+
+    public void setValor(BigDecimal valor) {
+        this.valor = valor;
     }
 }

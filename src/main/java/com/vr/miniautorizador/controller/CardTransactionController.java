@@ -1,6 +1,6 @@
 package com.vr.miniautorizador.controller;
 
-import com.vr.miniautorizador.dto.response.CardTransactionRequest;
+import com.vr.miniautorizador.dto.request.CardTransactionRequest;
 import com.vr.miniautorizador.service.CardTransactionService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

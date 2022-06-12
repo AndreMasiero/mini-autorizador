@@ -1,4 +1,4 @@
-package com.vr.miniautorizador.dto.response;
+package com.vr.miniautorizador.dto.request;
 
 public class CardRequest {
 
@@ -9,7 +9,15 @@ public class CardRequest {
         return numeroCartao;
     }
 
+    public void setNumeroCartao(String numeroCartao) {
+        this.numeroCartao = numeroCartao;
+    }
+
     public String getSenha() {
         return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 }

@@ -2,17 +2,19 @@ package com.vr.miniautorizador.service;
 
 import com.vr.miniautorizador.domain.Cards;
 import com.vr.miniautorizador.dto.CardDto;
-import com.vr.miniautorizador.dto.response.CardRequest;
+import com.vr.miniautorizador.dto.request.CardRequest;
 import com.vr.miniautorizador.enums.ErrorCode;
-import com.vr.miniautorizador.exception.UnprocessableEntityException;
 import com.vr.miniautorizador.exception.NotFoundException;
+import com.vr.miniautorizador.exception.UnprocessableEntityException;
 import com.vr.miniautorizador.mapper.CardMapper;
 import com.vr.miniautorizador.repository.CardRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.Optional;
+
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 
 @Service
 public class CardService {
@@ -29,9 +31,9 @@ public class CardService {
 
         CardDto cardDto = cardMapper.cardRequestToCardDto(cardRequest);
 
-        Optional<Cards> card = cardRepository.findByCardNumber(cardDto.getCardNumber());
+        Cards card = getCardsByNumber(cardDto.getCardNumber());
 
-        if (card.isPresent()) {
+        if (nonNull(card)) {
             throw new UnprocessableEntityException(ErrorCode.CARD_ALREADY_EXISTS);
         }
 
@@ -42,15 +44,19 @@ public class CardService {
         return cardRepository.save(cards).getId();
     }
 
-    public BigDecimal getcardBalance(String cardNumber){
+    public BigDecimal getCardBalance(String cardNumber) {
 
-        Optional<Cards> card = cardRepository.findByCardNumber(cardNumber);
+        Cards card = getCardsByNumber(cardNumber);
 
-        if (!card.isPresent()) {
+        if (isNull(card)) {
             throw new NotFoundException(ErrorCode.CARD_NOT_FOUND);
         }
 
-        return card.get().getBalance();
+        return card.getBalance();
+    }
+
+    private Cards getCardsByNumber(String cardNumber) {
+        return cardRepository.findByCardNumber(cardNumber);
     }
 
 }

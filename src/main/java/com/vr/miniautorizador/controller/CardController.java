@@ -1,6 +1,6 @@
 package com.vr.miniautorizador.controller;
 
-import com.vr.miniautorizador.dto.response.CardRequest;
+import com.vr.miniautorizador.dto.request.CardRequest;
 import com.vr.miniautorizador.service.CardService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +25,6 @@ public class CardController {
 
     @RequestMapping(value = "/{cardNumber}", method = RequestMethod.GET)
     public ResponseEntity<BigDecimal> update(@PathVariable final String cardNumber) {
-        return ResponseEntity.status(HttpStatus.OK).body(cardService.getcardBalance(cardNumber));
+        return ResponseEntity.status(HttpStatus.OK).body(cardService.getCardBalance(cardNumber));
     }
 }

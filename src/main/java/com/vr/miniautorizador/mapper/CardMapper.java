@@ -3,8 +3,8 @@ package com.vr.miniautorizador.mapper;
 import com.vr.miniautorizador.domain.Cards;
 import com.vr.miniautorizador.dto.CardDto;
 import com.vr.miniautorizador.dto.CardTransactionDto;
-import com.vr.miniautorizador.dto.response.CardRequest;
-import com.vr.miniautorizador.dto.response.CardTransactionRequest;
+import com.vr.miniautorizador.dto.request.CardRequest;
+import com.vr.miniautorizador.dto.request.CardTransactionRequest;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
