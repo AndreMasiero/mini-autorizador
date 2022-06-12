@@ -7,19 +7,16 @@ import com.vr.miniautorizador.exception.UnprocessableEntityException;
 import com.vr.miniautorizador.mapper.CardMapper;
 import com.vr.miniautorizador.repository.CardRepository;
 import com.vr.miniautorizador.service.CardTransactionService;
-import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.when;
 
 public class TransactionServiceTest {
-
-    private static final String CARD_NUMBER = "6549873025634501";
 
     @Mock
     private CardRepository cardRepository;
@@ -41,23 +38,22 @@ public class TransactionServiceTest {
         CardTransactionDto cardTransactionDto = TestMassHelper.buildCardTransactionDto();
         Cards card = TestMassHelper.buildCardEntity();
 
-        when(cardMapper.cardTransactionRequestToCardBalanceDto(cardTransactionRequest)).thenReturn(cardTransactionDto);
-        when(cardRepository.findByCardNumber(CARD_NUMBER)).thenReturn(card);
+        when(cardMapper.cardTransactionRequestToCardBalanceDto(any(CardTransactionRequest.class))).thenReturn(cardTransactionDto);
+        when(cardRepository.findByCardNumber(any(String.class))).thenReturn(card);
 
         cardTransactionService.cardTransaction(cardTransactionRequest);
-        verify(cardRepository, times(1)).save(card);
     }
-//
-//    @Test(expectedExceptions = {UnprocessableEntityException.class})
-//    public void testCreateCard_CardNotFound() {
-//        CardTransactionRequest cardTransactionRequest = TestMassHelper.buildCardTransactionRequest();
-//        CardTransactionDto cardTransactionDto = TestMassHelper.buildCardTransactionDto();
-//
-//        when(cardMapper.cardTransactionRequestToCardBalanceDto(cardTransactionRequest)).thenReturn(cardTransactionDto);
-//        when(cardRepository.findByCardNumber(CARD_NUMBER)).thenReturn(null);
-//
-//        cardTransactionService.cardTransaction(cardTransactionRequest);
-//    }
 
+    @Test(expectedExceptions = {UnprocessableEntityException.class})
+    public void testCreateCard_CardNotFound() {
+        CardTransactionRequest cardTransactionRequest = TestMassHelper.buildCardTransactionRequest();
+        CardTransactionDto cardTransactionDto = TestMassHelper.buildCardTransactionDto();
+        Cards card = TestMassHelper.buildCardEntity();
+
+        when(cardMapper.cardTransactionRequestToCardBalanceDto(any(CardTransactionRequest.class))).thenReturn(cardTransactionDto);
+        when(cardRepository.findByCardNumber(any(String.class))).thenReturn(null, card);
+
+        cardTransactionService.cardTransaction(cardTransactionRequest);
+    }
 
 }
